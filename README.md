@@ -1,1 +1,1 @@
-# go-log
+# base log module
