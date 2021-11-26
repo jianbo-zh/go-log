@@ -1,4 +1,4 @@
-module github.com/codetree1807/go-log
+module github.com/jianbo-zh/go-log
 
 go 1.16
 
