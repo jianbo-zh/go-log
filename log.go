@@ -25,6 +25,20 @@ func Logger(system string) *ZapEventLogger {
 	}
 }
 
+// AllLevels get the log levels of all subsystem
+func AllLevels() map[string]string {
+
+	loggerMutex.RLock()
+	defer loggerMutex.RUnlock()
+
+	mlevels := make(map[string]string, len(levels))
+	for name, level := range levels {
+		mlevels[name] = level.String()
+	}
+
+	return mlevels
+}
+
 // SetLogLevel changes the log level of a specific subsystem
 // name=="*" changes all subsystems
 func SetLogLevel(name, level string) error {
@@ -33,8 +47,8 @@ func SetLogLevel(name, level string) error {
 		return err
 	}
 
-	loggerMutex.RLock()
-	defer loggerMutex.RUnlock()
+	loggerMutex.Lock()
+	defer loggerMutex.Unlock()
 
 	// wildcard, change all
 	if name == "*" {
